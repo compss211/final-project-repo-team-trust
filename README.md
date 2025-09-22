@@ -1,4 +1,4 @@
 # COMPSS-211-Final-Project-Template-Repo
 Template repository for COMPSS-211 Final Projects
 
-## By Jiyang Li 
+## Group Member: Shun, Ruben, Jiyang and Yucheng
