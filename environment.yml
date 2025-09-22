@@ -1,0 +1,16 @@
+name: compss211
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - beautifulsoup4>=4.12,<5
+  - datasets>=2.19,<3
+  - nltk>=3.8,<4
+  - pandas>=2.2,<3
+  - requests>=2.32,<3
+  - scikit-learn>=1.5,<2
+  - seaborn>=0.13,<1
+  - spacy>=3.7,<4
+  - pip
+  - pip:
+      - transformers>=4.43,<5

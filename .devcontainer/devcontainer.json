@@ -1,0 +1,14 @@
+{
+  "name": "py-conda",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/miniforge:2": {
+      "mamba": "true",
+      "condaVersion": "latest"
+    }
+  },
+  "postCreateCommand": "mamba env create -f environment.yml -y || true",
+  "customizations": {
+    "vscode": { "extensions": ["ms-python.python"] }
+  }
+}
