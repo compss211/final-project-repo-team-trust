@@ -1,0 +1,75 @@
+---
+title: "reddit_rpoliticaldiscussion_linechart"
+author: "MaCSS 211 - Fall 2025"
+date: "2025-10-10"
+output: html_document
+---
+
+```{r setup, include=TRUE}
+setwd("/Users/ruben/Desktop/final-project-repo-team-trust/data") #set your working directory
+library(ggplot2) #install packages
+library(dplyr) #install packages
+(echo = TRUE) #printcharts
+```
+
+```{r readcsv, include=TRUE} 
+reddit_data <-read.csv("joined_data.csv")
+head(reddit_data)
+```
+
+### create counts for each year
+```{r createcounts, include=TRUE} 
+year_counts <- reddit_data %>%
+  group_by(year) %>%
+  summarise(count = n())
+
+head(year_counts)
+```
+
+### Checking for missed yearly data 2018-2023
+```{r missedyears, include=TRUE} 
+table(reddit_data$year)
+```
+### Create timestamps using submission column created_utc_x and commment column created_utc_y
+```{r createtimestamps, include=TRUE} 
+reddit_data$year <- ifelse(
+  is.na(reddit_data$created_utc_y),
+  format(as.POSIXct(reddit_data$created_utc_x, origin = "1970-01-01", tz = "UTC"), "%Y"),
+  format(as.POSIXct(reddit_data$created_utc_y, origin = "1970-01-01", tz = "UTC"), "%Y")
+)
+
+table(reddit_data$year)
+```
+
+### Count rows per year (Posts + Comments)
+```{r countrows, include=TRUE}  
+
+year_counts <- reddit_data %>%
+  group_by(year) %>%
+  summarise(count = n()) %>%
+  mutate(
+    year = as.numeric(year),
+    count = as.numeric(count),
+    count_rounded = round(count / 10) * 10
+  )
+```
+
+### plot counts
+```{r plotlinechart, include=TRUE, echo=TRUE} 
+ggplot(year_counts, aes(x = as.numeric(year), y = count)) +
+  geom_line(color = "skyblue", size = 1.2) +
+  geom_point(color = "red", size = 3) +
+  geom_text(aes(label = count), vjust = -0.6, size = 3.5) +
+  scale_x_continuous(
+    breaks = seq(min(year_counts$year), max(year_counts$year), by = 1)  # toshow every year
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, max(year_counts$count), by = 2000)  # range of years
+  ) +
+  labs(
+    title = "Total Posts and Comments by Year in r/PoliticalDiscussion",
+    x = "Year",
+    y = "Count"
+  ) +
+  theme_minimal()
+```
