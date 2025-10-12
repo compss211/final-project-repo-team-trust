@@ -1,5 +1,6 @@
 import json
 #change the path to your own path
+#get the data from using the torrent
 input_path = "C:/Users/16082/Desktop/class_project/PoliticalDiscussion_comments"
 output_path = "C:/Users/16082/Desktop/class_project/PoliticalDiscussion_cleaned.jsonl"
 
